@@ -1,0 +1,7 @@
+<%= form_for :vocabulary, url: vocabularies_path do |f| %>
+  <div class="form-group">
+    <%= f.label :title, class: "hidden" %>
+    <%= f.text_field :title, class: "form-control", placeholder: "단어장의 이름을 입력하여 주세요."%>
+  </div>
+  <%= f.submit "OK", class: "btn btn-primary" %>
+<% end %>

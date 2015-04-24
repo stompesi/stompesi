@@ -1,0 +1,22 @@
+<%= vocabulary_id %>
+<%= form_for :vocablary, url: words_path do |f| %>
+  
+  <div class="form-group">
+    <%= f.label :word, class: "hidden" %>
+    <%= f.text_field :word, class: "form-control", placeholder: "단어를 입력하여 주세요."%>
+  </div>
+  <div class="form-group">
+    <%= f.label :meaning, class: "hidden" %>
+    <%= f.text_field :meaning, class: "form-control", placeholder: "단어의 뜻을 입력하여 주세요."%>
+  </div>
+  <div class="form-group">
+    <%= f.label :sentence, class: "hidden" %>
+    <%= f.text_field :sentence, class: "form-control", placeholder: "단어와 관련된 문장을 입력하여 주세요."%>
+  </div>
+  <div class="form-group">
+    <%= f.label :sentence_meaning, class: "hidden" %>
+    <%= f.text_field :sentence_meaning, class: "form-control", placeholder: "문장의 뜻을 입력하여 주세요."%>
+  </div>
+  <%= link_to "그만", vocabularies_path, class: "btn btn-primary" %>
+  <%= f.submit "다음", class: "btn btn-primary" %>
+<% end %>

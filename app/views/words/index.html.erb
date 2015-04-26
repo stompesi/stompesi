@@ -1,0 +1,64 @@
+<% if @words.length != 0 %>
+  <div id="question">
+    <% @words.each do |word|%>
+      <div data-word-row data-word-id="<%= word.id %>" data-stage="<%= word.stage %>" class="row" style="text-align: center; display: none;">
+        <h3 data-word ><%= word.word %></h3>
+        <span class="hidden" data-meaning >(<%= word.meaning %>)</span>
+        <span class="hidden" data-sentence ><%= word.sentence %></span>
+        <span class="hidden" data-sentence-meaning><%= word.sentence_meaning %></span>
+      </div>
+    <% end %>
+
+
+    <div id="answer-controller" class="row" style="text-align: center;">
+      <div class="col-md-4">
+        <button id="know-btn" class="btn btn-success btn-block">안다</button>
+      </div>
+      <div class="col-md-4">
+        <button id="dont-know-btn" class="btn btn-danger btn-block">모른다</button>
+      </div>
+      <div class="col-md-4">
+        <button id="confusing-btn" class="btn btn-info btn-block">헤깔리</button>
+      </div>
+    </div>
+
+    <div id="next-controller" class="row" style="text-align: center; display: none;">
+      <div class="col-md-12">
+        <button id="next-btn" class="btn btn-success btn-block">다음</button>
+      </div>
+    </div>
+
+    <div id="check-controller" class="row" style="text-align: center; display: none;">
+      <div class="col-md-6">
+        <button id="correct-btn" class="btn btn-success btn-block">맞았다</button>
+      </div>
+      <div class="col-md-6">
+        <button id="wrong-btn" class="btn btn-danger btn-block">틀렸다</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="result" class="row" style="text-align: center; display: none;">
+    <div>
+      <span id="question-size"></span><span>문제 중</span>
+    </div>
+    <div>
+      <span id="stage-up-size"></span><span>문제 Stage Up</span>
+    </div>
+    <div>
+      <span id="stage-fixed-size"></span><span>문제 Stage Fixed</span>
+    </div>
+    <div>
+      <span id="stage-down-size"></span><span>문제 Stage Down</span>
+    </div>
+
+    <button id="update-word-list-btn" class="btn btn-success btn-block">확인</button>
+
+    <!-- <%= link_to '확인', vocabularies_path, class: 'btn btn-success' %> -->
+  </div>
+<% else %>
+  푸실 문제가 없습니다.ㅎㅎ
+
+  <%= link_to '확인', vocabularies_path, class: 'btn btn-success' %>
+  </div>
+<% end %>

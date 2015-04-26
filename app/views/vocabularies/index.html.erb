@@ -1,6 +1,6 @@
 <div class="row vocabulary-header">
   <div class="pull-left">
-    <%= link_to '테스트하기', words_path, class: 'btn btn-success' %>
+    <%= link_to 'Today - word', words_path, class: 'btn btn-success' %>
   </div>
   <div class="button-group pull-right">
     <%= link_to '+', new_vocabulary_path, class: 'btn btn-default'%>
@@ -10,7 +10,7 @@
 
   <div class="list-group">
     <% @vocabularies.each do |vocabulary|%>
-      <%= link_to vocabulary.title, vocabulary_path(vocabulary)%>
+      <%= link_to vocabulary.title, vocabulary_path(vocabulary), class: 'list-group-item' %>
     <% end %>
   </div>
 </div>

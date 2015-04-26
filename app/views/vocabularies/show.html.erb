@@ -1,5 +1,48 @@
-<div class="list-group">
-  <% @words.each do |word|%>
-    <%= word.word %>
-  <% end %>
+<div class="row vocabulary-header">
+  <div class="pull-left">
+    <h4><%= @vocabulary.title %></h4>
+  </div>
+  <div class="button-group pull-right">
+    <%= link_to '+', new_word_path(vocabulary_id: @vocabulary.id), class: 'btn btn-default'%>
+  </div>
 </div>
+<div class="row">
+</div>
+<div class="row">
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Word</th>
+        <th>Meaning</th>
+        <th>Sentence</th>
+        <th>Sentence - meaning</th>
+        <th>State</th>
+        <th>설정</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% i = 0 %>
+      <% @vocabulary.words.each do |word|%>
+        <tr>
+          <th> <%= i = i + 1%></th>
+          <td><%= word.word %></td>
+          <td><%= word.meaning %></td>
+          <td><%= word.sentence %></td>
+          <td><%= word.sentence_meaning %></td>
+          <td><%= word.stage %></td>
+          <td>
+            <%= link_to '', word_path(word, @vocabulary.id), class: 'glyphicon glyphicon-edit
+                '%>
+            <%= link_to '', word_path(word),
+                  method: :delete,
+                  data: { confirm: '단어를 삭제하시겠습니까?' }, class: 'glyphicon glyphicon-trash' %>
+          </td>
+        </tr>      
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+

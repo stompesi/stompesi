@@ -1,8 +1,8 @@
-<%= form_for :word, url: words_path do |f| %>
+<%= form_for @word, url: word_path(@word) do |f| %>
   <%= f.hidden_field :vocabulary_id, value: @vocabulary_id %>
   <div class="form-group">
     <%= f.label :word, class: "hidden" %>
-    <%= f.text_field :word, class: "form-control", placeholder: "단어를 입력하여 주세요."%>
+    <%= f.text_field :word, class: "form-control", placeholder: "단어의 뜻을 입력하여 주세요."%>
   </div>
   <div class="form-group">
     <%= f.label :meaning, class: "hidden" %>

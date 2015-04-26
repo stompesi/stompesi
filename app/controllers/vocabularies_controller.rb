@@ -10,12 +10,12 @@ class VocabulariesController < ApplicationController
   def create
     vocabulary = Vocabulary.new(vocabulary_params)
     vocabulary.save!
-    redirect_to new_word_path(vocabulary_id: vocabulary.id)
+    
+    redirect_to vocabulary_path(vocabulary)
   end
 
   def show
-    vocabulary = Vocabulary.find(params[:id])
-    @words = vocabulary.words
+    @vocabulary = Vocabulary.find(params[:id])
   end
 
   private
@@ -24,4 +24,5 @@ class VocabulariesController < ApplicationController
     params.require(:vocabulary).permit(:title)
   end
 
+  
 end

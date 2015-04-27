@@ -16,7 +16,16 @@ class VocabulariesController < ApplicationController
 
   def show
     @vocabulary = Vocabulary.find(params[:id])
-    @words = @vocabulary.order(:created_at)
+    @words = @vocabulary.words.order(:created_at)
+
+    @words.each do |word|
+      if word.remaining_dates > Time.now
+        word.state = '#50B551'
+      else
+        word.state = '#E76166'
+      end
+    end
+    
   end
 
   private

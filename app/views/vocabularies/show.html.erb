@@ -26,12 +26,12 @@
       <% i = 0 %>
       <% @words.each do |word|%>
         <tr>
-          <th> <%= i = i + 1%></th>
+          <th><%= i = i + 1%></th>
           <td><%= word.word %></td>
           <td><%= word.meaning %></td>
           <td><%= word.sentence %></td>
           <td><%= word.sentence_meaning %></td>
-          <td><%= word.stage %></td>
+          <td><span class="bullet" style="background-color: <%= word.state %>;"></span></td>
           <td>
             <%= link_to '', word_path(word, @vocabulary.id), class: 'glyphicon glyphicon-edit
                 '%>

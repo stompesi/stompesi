@@ -16,6 +16,7 @@ class VocabulariesController < ApplicationController
 
   def show
     @vocabulary = Vocabulary.find(params[:id])
+    @words = @vocabulary.order(:created_at)
   end
 
   private

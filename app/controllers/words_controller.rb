@@ -39,6 +39,7 @@ class WordsController < ApplicationController
   def create
     vocabulary = Vocabulary.find(params[:word][:vocabulary_id])
     word = vocabulary.words.new(word_params)
+    word.remaining_dates = Time.now
     word.save!
     redirect_to vocabulary_path(vocabulary)
   end

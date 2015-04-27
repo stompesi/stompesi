@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150426031426) do
+ActiveRecord::Schema.define(version: 20150427153202) do
 
   create_table "vocabularies", force: :cascade do |t|
     t.string   "title"
@@ -25,9 +25,9 @@ ActiveRecord::Schema.define(version: 20150426031426) do
     t.string   "sentence"
     t.string   "sentence_meaning"
     t.integer  "vocabulary_id"
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
-    t.datetime "remaining_dates",  default: '2015-04-26 13:44:10'
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.datetime "remaining_dates"
     t.integer  "stage",            default: 0
   end
 

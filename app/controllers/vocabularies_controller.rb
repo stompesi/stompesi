@@ -1,6 +1,7 @@
 class VocabulariesController < ApplicationController
   def index
     @vocabularies = Vocabulary.all
+    @remaining_word_count = Word.where('remaining_dates < ?', Time.now).size
     render 'index'
   end
 

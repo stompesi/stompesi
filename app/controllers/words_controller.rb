@@ -29,7 +29,7 @@ class WordsController < ApplicationController
     params[:word_lst].each do |object|
       word = Word.find(object[1]['id'])
       word.stage = object[1]['stage']
-      word.remaining_dates = word.remaining_dates + WordsController.day[word.stage].days
+      word.remaining_dates = Time.now + WordsController.day[word.stage].days
       word.save!
     end
 

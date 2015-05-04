@@ -1,6 +1,7 @@
 <div class="row vocabulary-header">
   <div class="pull-left">
     <%= link_to 'Today - word', words_path, class: 'btn btn-success' %>
+    (외울 단어수: <%= @remaining_word_count %>)개
   </div>
   <div class="button-group pull-right">
     <%= link_to '+', new_vocabulary_path, class: 'btn btn-default'%>

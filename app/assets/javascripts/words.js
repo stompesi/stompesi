@@ -67,10 +67,7 @@ word = {
       showNextController();
       if(word.round == 3) {
         word.stage.down += 1;
-        word.wordList[word.index].stage -= 1;
-        if(word.wordList[word.index].stage < 0) {
-          word.wordList[word.index].stage = 0;
-        }
+        word.wordList[word.index].stage = 0;
       }
       $('[data-word-row]').eq(word.index).children('[data-meaning]').removeClass('hidden');
     });
@@ -110,10 +107,7 @@ word = {
       $('#check-controller').hide();
       if(word.round == 3) {
         word.stage.down += 1;
-        word.wordList[word.index].stage -= 1;
-        if(word.wordList[word.index].stage < 0) {
-          word.wordList[word.index].stage = 0;
-        }
+        word.wordList[word.index].stage = 0;
       }
       $('[data-word-row]').eq(word.index).children('[data-meaning]').addClass('hidden');
       showNextAnswer();

@@ -1,7 +1,14 @@
 class VocabulariesController < ApplicationController
   def index
-    @vocabularies = Vocabulary.all
-    @remaining_word_count = Word.where('remaining_dates < ?', Time.now).size
+    @vocabularies = current_user.vocabularies.all
+
+    # 이것보다 더 좋은 방법이 있을듯 한데 아직은 잘모르겠다. 확인요망
+      @remaining_word_count = 0
+      @vocabularies.each do |vocabulary|
+        @remaining_word_count += vocabulary.words.where('remaining_dates < ?', Time.now).size
+      end
+    ###
+  
     render 'index'
   end
 
@@ -9,7 +16,7 @@ class VocabulariesController < ApplicationController
   end
 
   def create
-    vocabulary = Vocabulary.new(vocabulary_params)
+    vocabulary = current_user.vocabularies.new(vocabulary_params)
     vocabulary.save!
     
     redirect_to vocabulary_path(vocabulary)

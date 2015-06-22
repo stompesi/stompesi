@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :vocabularies
+  has_many :words, :through => :vocabularies
   def self.create_with_omniauth(auth)
     user = create! do |user|
       user.provider = auth["provider"]

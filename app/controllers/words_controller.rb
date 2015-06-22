@@ -5,7 +5,7 @@ class WordsController < ApplicationController
   end
 
   def index
-    @words = Word.where('remaining_dates < ?', Time.now).order("RANDOM()").limit(50)
+    @words = current_user.words.where('remaining_dates < ?', Time.now).order("RANDOM()").limit(50)
   end
 
   def new

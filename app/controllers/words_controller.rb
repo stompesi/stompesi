@@ -13,7 +13,7 @@ class WordsController < ApplicationController
   end
 
   def show
-    @word = Word.find(params[:id])
+    @word = current_user.words.find(params[:id])
     @vocabulary_id = Vocabulary.find(params[:format]).id
   end
 

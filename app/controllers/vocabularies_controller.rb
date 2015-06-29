@@ -1,23 +1,19 @@
 class VocabulariesController < ApplicationController
-  def index
-    @vocabularies = current_user.vocabularies.all
-    @remaining_word_count = current_user.words.where('remaining_dates < ?', Time.now).size
-    render 'index'
-  end
-
   def new
+    @folder_id = params[:folder_id]
   end
 
   def create
-    vocabulary = current_user.vocabularies.new(vocabulary_params)
+    folder = Folder.find(params[:vocabulary][:folder_id])
+    vocabulary = folder.vocabularies.new(vocabulary_params)
     vocabulary.save!
-    
-    redirect_to vocabulary_path(vocabulary)
+    redirect_to folder_path(folder)
   end
 
   def show
     @vocabulary = Vocabulary.find(params[:id])
-    if @vocabulary.user_id == current_user.id 
+    folder = Folder.find(@vocabulary.folder_id)
+    if folder.user_id == current_user.id 
       @words = @vocabulary.words.order(:created_at)
 
       @words.each do |word|
@@ -35,6 +31,6 @@ class VocabulariesController < ApplicationController
   private
 
   def vocabulary_params
-    params.require(:vocabulary).permit(:title)
+    params.require(:vocabulary).permit(:name)
   end
 end

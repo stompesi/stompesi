@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150622003319) do
+ActiveRecord::Schema.define(version: 20150629173151) do
+
+  create_table "folders", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.integer  "folder_id"
+  end
+
+  add_index "folders", ["folder_id"], name: "index_folders_on_folder_id"
+  add_index "folders", ["user_id"], name: "index_folders_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "provider"
@@ -26,13 +37,13 @@ ActiveRecord::Schema.define(version: 20150622003319) do
   end
 
   create_table "vocabularies", force: :cascade do |t|
-    t.string   "title"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "user_id"
+    t.integer  "folder_id"
   end
 
-  add_index "vocabularies", ["user_id"], name: "index_vocabularies_on_user_id"
+  add_index "vocabularies", ["folder_id"], name: "index_vocabularies_on_folder_id"
 
   create_table "words", force: :cascade do |t|
     t.string   "word"

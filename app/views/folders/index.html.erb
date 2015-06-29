@@ -1,0 +1,31 @@
+<div class="row vocabulary-header">
+  <div class="pull-left">
+  <% if @folder.folder_id.nil? %>
+    <%= link_to '모든 단어 테스트', words_path, class: 'btn btn-success' %>
+    (외울 단어수: <%= @remaining_total_word_count %>)
+  <% end %>
+    <%= link_to '현재폴더 단어 테스트', words_path(folder_id: @folder.id), class: 'btn btn-success' %>
+    (외울 단어수: <%= @remaining_word_count %>)
+  </div>
+  <div class="button-group pull-right">
+    <%= link_to '폴더추가', new_folder_path(folder_id: @folder.id), class: 'btn btn-default'%>
+  </div>
+  <div class="button-group pull-right">
+    <%= link_to '단어장추가', new_vocabulary_path(folder_id: @folder.id), class: 'btn btn-default'%>
+  </div>
+
+</div>
+<div class="row">
+  <% unless @folder.folder_id.nil? %>
+    <%= link_to '..', folder_path(@folder.folder_id), class: 'list-group-item folder' %>
+  <% end %>
+  <div class="list-group">
+    <% @folders.each do |folder|%>
+      <%= link_to "#{folder.name} - 남은단어 #{folder.remaining_number} 개" , folder_path(folder), class: 'list-group-item folder' %>
+    <% end %>
+
+    <% @vocabularies.each do |vocabulary|%>
+      <%= link_to "#{vocabulary.name} - 남은단어 #{vocabulary.remaining_number} 개", vocabulary_path(vocabulary), class: 'list-group-item vocabulary' %>
+    <% end %>
+  </div>
+</div>

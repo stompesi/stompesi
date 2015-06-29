@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   resources :vocabularies
+  resources :folders
 
   resources :words do
     collection do

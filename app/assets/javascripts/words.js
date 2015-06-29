@@ -155,7 +155,7 @@ word = {
       url: "/words/mutipule_update",
       data: { word_lst: word.wordList }
     }).success(function(result){
-      $(location).attr('href','/vocabularies');
+      $(location).attr('href','/folders');
     });
   }
 }

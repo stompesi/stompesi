@@ -1,11 +1,11 @@
-<%= form_for :vocabulary, url: vocabularies_path do |f| %>
+<%= form_for :folder, url: folders_path do |f| %>
   <%= f.hidden_field :folder_id, value: @folder_id %>
   <div class="form-group">
     <%= f.label :name, class: "hidden" %>
     <%= f.text_field :name, class: "form-control", placeholder: "단어장의 이름을 입력하여 주세요."%>
   </div>
   <div class="pull-right">
-    <%= link_to "Cancel", vocabularies_path, class: "btn btn-default" %>
+    <%= link_to "Cancel", folders_path, class: "btn btn-default" %>
     <%= f.submit "OK", class: "btn btn-success" %>
   </div>
 <% end %>

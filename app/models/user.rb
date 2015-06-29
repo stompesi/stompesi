@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
-  has_many :vocabularies
-  has_many :words, :through => :vocabularies
+  has_many :folders
+  has_many :words, through: :folders
   def self.create_with_omniauth(auth)
     user = create! do |user|
       user.provider = auth["provider"]

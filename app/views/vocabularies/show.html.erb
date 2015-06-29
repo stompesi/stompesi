@@ -1,6 +1,7 @@
 <div class="row vocabulary-header">
   <div class="pull-left">
-    <h4><%= @vocabulary.title %></h4>
+    <%= link_to '현재 단어장만 단어 테스트', words_path(vocabulary_id: @vocabulary.id), class: 'btn btn-success' %>
+    <h4><%= @vocabulary.name %></h4>
   </div>
   <div class="button-group pull-right">
     <%= link_to '+', new_word_path(vocabulary_id: @vocabulary.id), class: 'btn btn-default'%>

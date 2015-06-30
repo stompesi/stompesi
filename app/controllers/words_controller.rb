@@ -7,7 +7,7 @@ class WordsController < ApplicationController
   def index
     if !params[:vocabulary_id].nil?
       vocabulary = Vocabulary.find(params[:vocabulary_id])
-      @words = vocabulary.words.where('remaining_dates < ?', Time.now).order("RANDOM()").limit(50)
+      @words = vocabulary.words.where('remaining_dates < ?', Time.now).order("RANDOM()")
     elsif !params[:folder_id].nil?
       folder = Vocabulary.find(params[:folder_id])
       @words = folder.words.where('remaining_dates < ?', Time.now).order("RANDOM()").limit(50)
@@ -51,7 +51,6 @@ class WordsController < ApplicationController
     word.remaining_dates = Time.now
     word.save!
     redirect_to new_word_path(vocabulary_id: vocabulary.id)
-    # redirect_to vocabulary_path(vocabulary)
   end
 
   def destroy

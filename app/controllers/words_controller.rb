@@ -9,7 +9,7 @@ class WordsController < ApplicationController
       vocabulary = Vocabulary.find(params[:vocabulary_id])
       @words = vocabulary.words.where('remaining_dates < ?', Time.now).order("RANDOM()")
     elsif !params[:folder_id].nil?
-      folder = Vocabulary.find(params[:folder_id])
+      folder = folder.find(params[:folder_id])
       @words = folder.words.where('remaining_dates < ?', Time.now).order("RANDOM()").limit(50)
     else 
       @words = current_user.words.where('remaining_dates < ?', Time.now).order("RANDOM()").limit(50)

@@ -50,7 +50,8 @@ class WordsController < ApplicationController
     word = vocabulary.words.new(word_params)
     word.remaining_dates = Time.now
     word.save!
-    redirect_to vocabulary_path(vocabulary)
+    redirect_to new_word_path(vocabulary_id: vocabulary.id)
+    # redirect_to vocabulary_path(vocabulary)
   end
 
   def destroy

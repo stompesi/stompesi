@@ -23,6 +23,7 @@ word = {
     this.getWordList();
     this.addEventListener();
     this.addUpdateWordListEventListener();
+    $('#word_word').focus();
   },
   getWordList: function() {
     var wordRows = $('[data-word-row]'),

@@ -47,7 +47,6 @@ word = {
   addHotkeyEventListener : function() {
     $('#word_meaning').on('keyup', function(e) {
       var code = e.keyCode || e.which;
-      console.log(code);
       if(code == 32 && word.prevCorde == 32) {// 1
         e.preventDefault();
         var prevValue = $(this).val();
@@ -56,9 +55,18 @@ word = {
       } else {
         word.prevCorde = code;
       }
+    });
 
-
-
+    $('#word_word').on('keyup', function(e) {
+      var code = e.keyCode || e.which;
+      if(code == 32 && word.prevCorde == 32) {// 1
+        $('#word_meaning').focus();
+        var prevValue = $(this).val();
+        $(this).val(prevValue.substr(0, prevValue.length - 2));
+        word.prevCorde = 0;
+      } else {
+        word.prevCorde = code;
+      }
     });
   },
   addAnswerEventListener: function() {

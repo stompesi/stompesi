@@ -10,6 +10,7 @@ word = {
   },
   round: 1,
   index: 0,
+  prevCorde: 0,
   wordList: [],
   init: function() {
     this.round = 1;
@@ -47,11 +48,17 @@ word = {
     $('#word_meaning').on('keyup', function(e) {
       var code = e.keyCode || e.which;
       console.log(code);
-      if(code == 49) {// 1
+      if(code == 32 && word.prevCorde == 32) {// 1
         e.preventDefault();
         var prevValue = $(this).val();
-        $(this).val(prevValue.substr(0, prevValue.length - 1) + ' / ');
+        $(this).val(prevValue.substr(0, prevValue.length - 1) + '/ ');
+        word.prevCorde = 0;
+      } else {
+        word.prevCorde = code;
       }
+
+
+
     });
   },
   addAnswerEventListener: function() {

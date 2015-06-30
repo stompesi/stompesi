@@ -41,6 +41,18 @@ word = {
     this.addAnswerEventListener();
     this.addNextEventListener();
     this.addCheckEventListener();
+    this.addHotkeyEventListener();
+  },
+  addHotkeyEventListener : function() {
+    $('#word_meaning').on('keyup', function(e) {
+      var code = e.keyCode || e.which;
+      console.log(code);
+      if(code == 49) {// 1
+        e.preventDefault();
+        var prevValue = $(this).val();
+        $(this).val(prevValue.substr(0, prevValue.length - 1) + ' / ');
+      }
+    });
   },
   addAnswerEventListener: function() {
     var showNextController = function() {

@@ -1,5 +1,12 @@
 <% if @words.length != 0 %>
   <div id="question">
+    <div class="row" style="text-align: center;">
+      <div>
+        <span id="remainning-word-size"><%= @words.length %></span><span>문제 중</span>
+        <span id="current-word-index">1</span><span>번째 문제 푸는 중</span>
+      </div>
+    </div>
+    
     <% @words.each do |word|%>
       <div data-word-row data-word-id="<%= word.id %>" data-stage="<%= word.stage %>" class="row" style="text-align: center; display: none;">
         <h3 data-word ><%= word.word %></h3>
@@ -9,8 +16,9 @@
       </div>
     <% end %>
 
-
     <div id="answer-controller" class="row" style="text-align: center;">
+      
+      
       <div class="col-md-4">
         <button id="know-btn" class="btn btn-success btn-block">안다</button>
       </div>
@@ -21,6 +29,8 @@
         <button id="confusing-btn" class="btn btn-info btn-block">헤깔리</button>
       </div>
     </div>
+
+    
 
     <div id="next-controller" class="row" style="text-align: center; display: none;">
       <div class="col-md-12">
@@ -34,6 +44,12 @@
       </div>
       <div class="col-md-6">
         <button id="wrong-btn" class="btn btn-danger btn-block">틀렸다</button>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top: 50px;">
+      <div class="col-md-12">
+        <button data-update-word-list-btn class="btn btn-block">그만하기</button>
       </div>
     </div>
   </div>
@@ -51,8 +67,7 @@
     <div>
       <span id="stage-down-size"></span><span>문제 Stage Down</span>
     </div>
-
-    <button id="update-word-list-btn" class="btn btn-success btn-block">확인</button>
+    <button data-update-word-list-btn class="btn btn-success btn-block">확인</button>
   </div>
 <% else %>
   푸실 문제가 없습니다.ㅎㅎ

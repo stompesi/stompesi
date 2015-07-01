@@ -11,6 +11,7 @@ word = {
   round: 1,
   index: 0,
   prevCorde: 0,
+  remainningWordSize: 0,
   wordList: [],
   init: function() {
     this.round = 1;
@@ -25,6 +26,7 @@ word = {
     this.addEventListener();
     this.addUpdateWordListEventListener();
     $('#word_word').focus();
+    remainningWordSize = $('#remainning-word-size').text() - 0;
   },
   getWordList: function() {
     var wordRows = $('[data-word-row]'),
@@ -78,27 +80,35 @@ word = {
     var showCheckController = function() {
       $('#answer-controller').hide();
       $('#check-controller').show();
-    }
+    };
 
-    $('#know-btn').on('click', function() {
+    var knowOrConfusingWordMeanEvent = function() {
       showCheckController();
       $('[data-word-row]').eq(word.index).children('[data-meaning]').removeClass('hidden');
-    });
+    };
 
-    $('#confusing-btn').on('click', function() {
-
-      showCheckController();
-      $('[data-word-row]').eq(word.index).children('[data-meaning]').removeClass('hidden');
-    });
-
-    $('#dont-know-btn').on('click', function() {
+    var dontKnowWordMeanEvent = function() {
       showNextController();
       if(word.round == 3) {
         word.stage.down += 1;
         word.wordList[word.index].stage = 0;
       }
       $('[data-word-row]').eq(word.index).children('[data-meaning]').removeClass('hidden');
+    };
+
+    $('#know-btn').on('click', function() {
+      knowOrConfusingWordMeanEvent();
     });
+
+    $('#confusing-btn').on('click', function() {
+      knowOrConfusingWordMeanEvent();
+    });
+
+    $('#dont-know-btn').on('click', function() {
+      dontKnowWordMeanEvent();
+    });
+
+
   },
   addNextEventListener: function() {
     $('#next-btn').on('click', function() {
@@ -112,6 +122,7 @@ word = {
 
     $('#correct-btn').on('click', function() {
       $('#check-controller').hide();
+      remainningWordSize--;
       switch(word.round) {
       case 1:
         word.wordList[word.index].stage += 1;
@@ -119,6 +130,7 @@ word = {
           word.wordList[word.index].stage = 7;
         }
         word.stage.up += 1;
+
         break;
       case 2:
       case 3:
@@ -142,7 +154,7 @@ word = {
     });
   },
   addUpdateWordListEventListener: function() {
-    $('#update-word-list-btn').on('click', function() {
+    $('[data-update-word-list-btn]').on('click', function() {
       word.request();
     });
   },
@@ -159,6 +171,7 @@ word = {
       if(wordList.length == word.index) {
         word.round = word.round + 1;
         word.index = 0;
+        $('#remainning-word-size').text(remainningWordSize);
       }
     }while(wordList[word.index].isPass && word.round != 4);
 
@@ -172,6 +185,7 @@ word = {
 
       $('#result').show();
     } else {
+      $('#current-word-index').text(word.index + 1);
       $('#answer-controller').show();
       $wordRow.eq(word.index).show();  
     }

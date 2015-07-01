@@ -12,6 +12,7 @@ word = {
   index: 0,
   prevCorde: 0,
   remainningWordSize: 0,
+  currentSequence: 0,
   wordList: [],
   init: function() {
     this.round = 1;
@@ -26,7 +27,8 @@ word = {
     this.addEventListener();
     this.addUpdateWordListEventListener();
     $('#word_word').focus();
-    remainningWordSize = $('#remainning-word-size').text() - 0;
+    this.remainningWordSize = $('#remainning-word-size').text() - 0;
+    this.currentSequence = 1;
   },
   getWordList: function() {
     var wordRows = $('[data-word-row]'),
@@ -122,7 +124,7 @@ word = {
 
     $('#correct-btn').on('click', function() {
       $('#check-controller').hide();
-      remainningWordSize--;
+      word.remainningWordSize--;
       switch(word.round) {
       case 1:
         word.wordList[word.index].stage += 1;
@@ -164,14 +166,14 @@ word = {
         $wordRow = $('[data-word-row]');
 
     $wordRow.eq(word.index).hide();
-
     do {
       word.index = word.index + 1;
 
       if(wordList.length == word.index) {
         word.round = word.round + 1;
         word.index = 0;
-        $('#remainning-word-size').text(remainningWordSize);
+        word.currentSequence = 0;
+        $('#remainning-word-size').text(word.remainningWordSize);
       }
     }while(wordList[word.index].isPass && word.round != 4);
 
@@ -185,10 +187,11 @@ word = {
 
       $('#result').show();
     } else {
-      $('#current-word-index').text(word.index + 1);
+      
       $('#answer-controller').show();
       $wordRow.eq(word.index).show();  
     }
+    $('#current-word-index').text(++word.currentSequence);
   },
 
   request: function() {

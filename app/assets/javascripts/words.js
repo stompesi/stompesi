@@ -25,7 +25,7 @@ word = {
     this.wordList = [];
     this.getWordList();
     this.addEventListener();
-    this.addUpdateWordListEventListener();
+    this.addEndEventListener();
     $('#word_word').focus();
     this.remainningWordSize = $('#remainning-word-size').text() - 0;
     this.currentSequence = 1;
@@ -115,7 +115,9 @@ word = {
   addNextEventListener: function() {
     $('#next-btn').on('click', function() {
       $('#next-controller').hide();
-      $('[data-word-row]').eq(word.index).children('[data-meaning]').addClass('hidden');
+      if($('#question').length != 0) {
+        $('[data-word-row]').eq(word.index).children('[data-meaning]').addClass('hidden');
+      }
       word.showNextAnswer();
     });
   },
@@ -155,9 +157,13 @@ word = {
       showNextAnswer();
     });
   },
-  addUpdateWordListEventListener: function() {
+  addEndEventListener: function() {
     $('[data-update-word-list-btn]').on('click', function() {
       word.request();
+    });
+
+    $('[data-memorize-end-btn]').on('click', function() {
+      window.history.back();
     });
   },
 
@@ -177,13 +183,12 @@ word = {
       }
     }while(wordList[word.index].isPass && word.round != 4);
 
-    if (word.round == 4) {
+    if ($('#question').length != 0 && word.round == 4) {
       $('#question').hide();
       $('#question-size').text(wordList.length);
       $('#stage-up-size').text(word.stage.up);
       $('#stage-fixed-size').text(word.stage.fixed);
       $('#stage-down-size').text(word.stage.down);
-
 
       $('#result').show();
     } else {

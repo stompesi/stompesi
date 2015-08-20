@@ -1,0 +1,29 @@
+<div id="memorize">
+  <div class="row" style="text-align: center;">
+    <div>
+      <span id="remainning-word-size"><%= @words.length %></span><span>개의 단어 중</span>
+      <span id="current-word-index">1</span><span>번째 단어 외우 중</span>
+    </div>
+  </div>
+  
+  <% @words.each do |word|%>
+    <div data-word-row data-word-id="<%= word.id %>" data-stage="<%= word.stage %>" class="row" style="text-align: center; display: none;">
+      <h3 data-word ><%= word.word %></h3>
+      <span data-meaning >(<%= word.meaning %>)</span>
+      <span data-sentence ><%= word.sentence %></span>
+      <span data-sentence-meaning><%= word.sentence_meaning %></span>
+    </div>
+  <% end %>  
+
+  <div id="check-controller" class="row" style="text-align: center;">
+    <div class="col-md-12">
+      <button id="next-btn" class="btn btn-success btn-block">다음</button>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 50px;">
+    <div class="col-md-12">
+      <button data-memorize-end-btn class="btn btn-block">그만하기</button>
+    </div>
+  </div>
+</div>

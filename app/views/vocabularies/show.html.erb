@@ -1,6 +1,11 @@
 <div class="row vocabulary-header">
   <div class="pull-left">
     <%= link_to '현재 단어장만 단어 테스트', words_path(vocabulary_id: @vocabulary.id), class: 'btn btn-success' %>
+
+    <%= link_to '현재 모든 단어 암기하기', memorize_all_words_path(vocabulary_id: @vocabulary.id), class: 'btn btn-default' %>
+    <%= link_to '현재 모르는 단어만 암기하기', memorize_words_path(vocabulary_id: @vocabulary.id), class: 'btn btn-important' %>
+
+
     <h4><%= @vocabulary.name %></h4>
   </div>
   <div class="button-group pull-right">

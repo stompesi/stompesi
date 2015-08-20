@@ -9,6 +9,14 @@ Rails.application.routes.draw do
       put :mutipule_update
       patch :mutipule_update
     end
+
+    collection do
+      get :memorize
+    end
+    
+    collection do
+      get :memorize_all
+    end
   end
 
   get 'auth/:provider/callback', to: 'sessions#create'

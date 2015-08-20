@@ -1,7 +1,7 @@
 class WordsController < ApplicationController
   #Word.update_all('remaining_dates = remaining_dates -1')
   def self.day
-    [0, 1, 2, 4, 8, 30, 60, 120]
+    [0, 1, 2, 4, 8, 16, 32, 64]
   end
 
   def index
@@ -14,7 +14,17 @@ class WordsController < ApplicationController
     else 
       @words = current_user.words.where('remaining_dates < ?', Time.now).order("RANDOM()").limit(50)
     end
-    
+  end
+
+  def memorize_all
+    vocabulary = Vocabulary.find(params[:vocabulary_id])
+    @words = vocabulary.words
+    render 'memorize'
+  end
+
+  def memorize
+    vocabulary = Vocabulary.find(params[:vocabulary_id])
+    @words = vocabulary.words.where('remaining_dates < ?', Time.now)
   end
 
   def new

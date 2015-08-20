@@ -18,13 +18,13 @@ class WordsController < ApplicationController
 
   def memorize_all
     vocabulary = Vocabulary.find(params[:vocabulary_id])
-    @words = vocabulary.words
+    @words = vocabulary.words.order(:created_at)
     render 'memorize'
   end
 
   def memorize
     vocabulary = Vocabulary.find(params[:vocabulary_id])
-    @words = vocabulary.words.where('remaining_dates < ?', Time.now)
+    @words = vocabulary.words.where('remaining_dates < ?', Time.now).order(:created_at)
   end
 
   def new

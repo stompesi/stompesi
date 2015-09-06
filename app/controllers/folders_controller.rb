@@ -3,7 +3,7 @@ class FoldersController < ApplicationController
     @folder = current_user.folders.find_by name: 'root'
 
     @folders = @folder.folders.all
-    @vocabularies = @folder.vocabularies.all
+    @vocabularies = @folder.vocabularies.all.order(:created_at)
     @remaining_word_count = 0
     @remaining_total_word_count = 0
     @folders.each do |folder|
@@ -37,7 +37,7 @@ class FoldersController < ApplicationController
     @folder = Folder.find(params[:id])
 
     @folders = @folder.folders.all
-    @vocabularies = @folder.vocabularies.all
+    @vocabularies = @folder.vocabularies.all.order(:created_at)
     @remaining_word_count = 0
     @remaining_total_word_count = 0
 

@@ -8,6 +8,7 @@ word = {
     fixed: 0,
     down: 0
   },
+  isShowAnswer: 0,
   round: 1,
   index: 0,
   prevCorde: 0,
@@ -72,9 +73,12 @@ word = {
         word.prevCorde = code;
       }
     });
+
+    
   },
   addAnswerEventListener: function() {
     var showNextController = function() {
+      debugger;
       $('#answer-controller').hide();
       $('#next-controller').show();
     };
@@ -87,6 +91,7 @@ word = {
     var knowOrConfusingWordMeanEvent = function() {
       showCheckController();
       $('[data-word-row]').eq(word.index).children('[data-meaning]').removeClass('hidden');
+      word.isShowAnswer = 1;
     };
 
     var dontKnowWordMeanEvent = function() {
@@ -96,6 +101,7 @@ word = {
         word.wordList[word.index].stage = 0;
       }
       $('[data-word-row]').eq(word.index).children('[data-meaning]').removeClass('hidden');
+       word.isShowAnswer = 2;
     };
 
     $('#know-btn').on('click', function() {
@@ -110,52 +116,83 @@ word = {
       dontKnowWordMeanEvent();
     });
 
+    $('body').on('keyup', function(e) {
+      console.log(e);
+      var code = e.keyCode || e.which;
+      if(code == 32) {// 1
+        return ;
+      } else if(code == 112 ) {
+        if(word.isShowAnswer == 0) {
+          knowOrConfusingWordMeanEvent();
+        } else if(word.isShowAnswer == 1) {
+          word.correctAnswer();
+        } else {
+          word.nextQuestion();
+        }
+      } else if(code == 113) {
+        if(word.isShowAnswer == 0) {
+          dontKnowWordMeanEvent();
+        } else if(word.isShowAnswer == 1) {
+          word.wrongAnswer();
+        }
+      } else if(code == 114 && !word.isShowAnswer){
+        knowOrConfusingWordMeanEvent();
+      }
+      
+    });
 
   },
   addNextEventListener: function() {
     $('#next-btn').on('click', function() {
-      $('#next-controller').hide();
-      if($('#question').length != 0) {
-        $('[data-word-row]').eq(word.index).children('[data-meaning]').addClass('hidden');
-      }
-      word.showNextAnswer();
+      word.nextQuestion();
     });
   },
+  nextQuestion: function() {
+    $('#next-controller').hide();
+    if($('#question').length != 0) {
+      $('[data-word-row]').eq(word.index).children('[data-meaning]').addClass('hidden');
+    }
+    word.showNextAnswer();
+  },
   addCheckEventListener: function() {
-    var showNextAnswer = word.showNextAnswer;
-
     $('#correct-btn').on('click', function() {
-      $('#check-controller').hide();
-      word.remainningWordSize--;
-      switch(word.round) {
-      case 1:
-        word.wordList[word.index].stage += 1;
-        if( word.wordList[word.index].stage == 8 ) {
-          word.wordList[word.index].stage = 7;
-        }
-        word.stage.up += 1;
-
-        break;
-      case 2:
-      case 3:
-        word.stage.fixed += 1;
-        break
-      default:
-        break;
-      }
-      word.wordList[word.index].isPass = true;
-      showNextAnswer();
+      word.correctAnswer();
     });
 
     $('#wrong-btn').on('click', function() {
-      $('#check-controller').hide();
-      if(word.round == 3) {
-        word.stage.down += 1;
-        word.wordList[word.index].stage = 0;
-      }
-      $('[data-word-row]').eq(word.index).children('[data-meaning]').addClass('hidden');
-      showNextAnswer();
+      word.wrongAnswer();
     });
+  },
+  correctAnswer: function() {
+    $('#check-controller').hide();
+    word.remainningWordSize--;
+    switch(word.round) {
+    case 1:
+      word.wordList[word.index].stage += 1;
+      if( word.wordList[word.index].stage == 8 ) {
+        word.wordList[word.index].stage = 7;
+      }
+      word.stage.up += 1;
+
+      break;
+    case 2:
+    case 3:
+      word.stage.fixed += 1;
+      break
+    default:
+      break;
+    }
+    word.wordList[word.index].isPass = true;
+    word.showNextAnswer();
+  },
+  wrongAnswer: function() {
+    $('#check-controller').hide();
+    if(word.round == 3) {
+      word.stage.down += 1;
+      word.wordList[word.index].stage = 0;
+    }
+    $('[data-word-row]').eq(word.index).children('[data-meaning]').addClass('hidden');
+    word.showNextAnswer();
   },
   addEndEventListener: function() {
     $('[data-update-word-list-btn]').on('click', function() {
@@ -171,6 +208,7 @@ word = {
     var wordList = word.wordList,
         $wordRow = $('[data-word-row]');
 
+    word.isShowAnswer = 0;
     $wordRow.eq(word.index).hide();
     do {
       word.index = word.index + 1;

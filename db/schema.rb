@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20150629173151) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "folders", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -21,8 +24,8 @@ ActiveRecord::Schema.define(version: 20150629173151) do
     t.integer  "folder_id"
   end
 
-  add_index "folders", ["folder_id"], name: "index_folders_on_folder_id"
-  add_index "folders", ["user_id"], name: "index_folders_on_user_id"
+  add_index "folders", ["folder_id"], name: "index_folders_on_folder_id", using: :btree
+  add_index "folders", ["user_id"], name: "index_folders_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "provider"
@@ -43,7 +46,7 @@ ActiveRecord::Schema.define(version: 20150629173151) do
     t.integer  "folder_id"
   end
 
-  add_index "vocabularies", ["folder_id"], name: "index_vocabularies_on_folder_id"
+  add_index "vocabularies", ["folder_id"], name: "index_vocabularies_on_folder_id", using: :btree
 
   create_table "words", force: :cascade do |t|
     t.string   "word"
@@ -57,6 +60,9 @@ ActiveRecord::Schema.define(version: 20150629173151) do
     t.integer  "stage",            default: 0
   end
 
-  add_index "words", ["vocabulary_id"], name: "index_words_on_vocabulary_id"
+  add_index "words", ["vocabulary_id"], name: "index_words_on_vocabulary_id", using: :btree
 
+  add_foreign_key "folders", "folders"
+  add_foreign_key "folders", "users"
+  add_foreign_key "vocabularies", "folders"
 end

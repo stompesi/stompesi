@@ -34,7 +34,7 @@ class WordsController < ApplicationController
       word.update(word_params)
     end
 
-    redirect_to folders_url
+    redirect_to overlap_words_path
   end
 
 

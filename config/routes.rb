@@ -17,6 +17,12 @@ Rails.application.routes.draw do
     collection do
       get :memorize_all
     end
+
+    collection do
+      get :overlap, to: 'words#show_overlap'
+      post :overlap, to: 'words#update_overlap'
+    end
+
   end
 
   get 'auth/:provider/callback', to: 'sessions#create'

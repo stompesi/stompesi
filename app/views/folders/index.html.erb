@@ -13,7 +13,9 @@
   <div class="button-group pull-right">
     <%= link_to '단어장추가', new_vocabulary_path(folder_id: @folder.id), class: 'btn btn-default'%>
   </div>
-
+  <div class="button-group pull-right">
+    <%= link_to '중복단어 제거', overlap_words_path, class: 'btn btn-default'%>
+  </div>
 </div>
 <div class="row">
   <% unless @folder.folder_id.nil? %>

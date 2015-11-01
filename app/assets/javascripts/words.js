@@ -78,7 +78,6 @@ word = {
   },
   addAnswerEventListener: function() {
     var showNextController = function() {
-      debugger;
       $('#answer-controller').hide();
       $('#next-controller').show();
     };
@@ -121,7 +120,7 @@ word = {
       var code = e.keyCode || e.which;
       if(code == 32) {// 1
         return ;
-      } else if(code == 112 ) {
+      } else if(code == 49 ) {
         if(word.isShowAnswer == 0) {
           knowOrConfusingWordMeanEvent();
         } else if(word.isShowAnswer == 1) {
@@ -129,13 +128,13 @@ word = {
         } else {
           word.nextQuestion();
         }
-      } else if(code == 113) {
+      } else if(code == 50) {
         if(word.isShowAnswer == 0) {
           dontKnowWordMeanEvent();
         } else if(word.isShowAnswer == 1) {
           word.wrongAnswer();
         }
-      } else if(code == 114 && !word.isShowAnswer){
+      } else if(code == 51 && !word.isShowAnswer){
         knowOrConfusingWordMeanEvent();
       }
       

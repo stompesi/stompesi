@@ -19,6 +19,10 @@ Rails.application.routes.draw do
     end
 
     collection do
+      get :input_word
+    end
+
+    collection do
       get :overlap, to: 'words#show_overlap'
       post :overlap, to: 'words#update_overlap'
     end

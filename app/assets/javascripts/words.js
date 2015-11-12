@@ -65,10 +65,20 @@ word = {
     $('#word_word').on('keyup', function(e) {
       var code = e.keyCode || e.which;
       if(code == 32 && word.prevCorde == 32) {// 1
-        $('#word_meaning').focus();
         var prevValue = $(this).val();
         $(this).val(prevValue.substr(0, prevValue.length - 2));
         word.prevCorde = 0;
+        $('#word_meaning').focus();
+        $.ajax({
+          type: "GET",
+          url: "/words/input_word",
+          data: { word: $(this).val() }
+        }).success(function(result){
+          
+          if(result.isHaveWord) {
+            $('#word_meaning').val(result.meaning)
+          }
+        });
       } else {
         word.prevCorde = code;
       }

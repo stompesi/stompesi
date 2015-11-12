@@ -86,6 +86,16 @@ class WordsController < ApplicationController
     redirect_to new_word_path(vocabulary_id: vocabulary.id)
   end
 
+  def input_word 
+    word = Word.find_by_word(params[:word])
+
+    if word.nil? 
+      render json: {isHaveWord: false}
+    else
+      render json: {isHaveWord: true, meaning: word.meaning}
+    end
+  end
+
   def destroy
     word = Word.find(params[:id])
     word.destroy

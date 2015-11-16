@@ -30,6 +30,9 @@ word = {
     $('#word_word').focus();
     this.remainningWordSize = $('#remainning-word-size').text() - 0;
     this.currentSequence = 1;
+    if(this.wordList.length != 0) {
+      word.playWordPronunciation();
+    }
   },
   getWordList: function() {
     var wordRows = $('[data-word-row]'),
@@ -73,8 +76,6 @@ word = {
         word.prevCorde = code;
       }
     });
-
-    
   },
   addAnswerEventListener: function() {
     var showNextController = function() {
@@ -116,7 +117,6 @@ word = {
     });
 
     $('body').on('keyup', function(e) {
-      console.log(e);
       var code = e.keyCode || e.which;
       if(code == 32) {// 1
         return ;
@@ -136,10 +136,16 @@ word = {
         }
       } else if(code == 51 && !word.isShowAnswer){
         knowOrConfusingWordMeanEvent();
+      } else if(code == 52) {
+        word.playWordPronunciation();
       }
       
     });
 
+  },
+  playWordPronunciation: function() {
+    var currentWord = $('[data-word-row]').eq(word.index).children('[data-word]').text();
+    responsiveVoice.speak(currentWord, 'US English Female', {volume: 1});
   },
   addNextEventListener: function() {
     $('#next-btn').on('click', function() {
@@ -229,9 +235,9 @@ word = {
 
       $('#result').show();
     } else {
-      
       $('#answer-controller').show();
-      $wordRow.eq(word.index).show();  
+      $wordRow.eq(word.index).show();
+      word.playWordPronunciation();
     }
     $('#current-word-index').text(++word.currentSequence);
   },

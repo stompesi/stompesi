@@ -61,8 +61,13 @@ class WordsController < ApplicationController
 
   def update
     vocabulary = Vocabulary.find(params[:word][:vocabulary_id])
-    word = Word.find(params[:id])
-    word.update(word_params)
+    update_word = Word.find(params[:id])
+
+    word_informations = Word.where(word: update_word.word)
+
+    word_informations.each do |word|
+      word.update(word_params)
+    end
 
     redirect_to vocabulary_path(vocabulary)
   end

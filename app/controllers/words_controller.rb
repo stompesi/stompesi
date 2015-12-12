@@ -78,13 +78,41 @@ class WordsController < ApplicationController
     render json: {success: true}
   end
 
+  def input_word 
+    word = Word.find_by_word(params[:word])
+
+    if word.nil? 
+      render json: {isHaveWord: false}
+    else
+      render json: {isHaveWord: true, meaning: word.meaning}
+    end
+  end
+  
   def create
+    word = Word.find_by_word(params[:word][:word])
     vocabulary = Vocabulary.find(params[:word][:vocabulary_id])
+    unless word.nil? 
+      word_informations = Word.where(word: params[:word][:word])
+
+      word_informations.each do |word|
+        word.update(word_params)
+      end
+    end
+
     word = vocabulary.words.new(word_params)
     word.remaining_dates = Time.now
     word.save!
+
     redirect_to new_word_path(vocabulary_id: vocabulary.id)
   end
+
+  # def create
+  #   vocabulary = Vocabulary.find(params[:word][:vocabulary_id])
+  #   word = vocabulary.words.new(word_params)
+  #   word.remaining_dates = Time.now
+  #   word.save!
+  #   redirect_to new_word_path(vocabulary_id: vocabulary.id)
+  # end
 
   def destroy
     word = Word.find(params[:id])

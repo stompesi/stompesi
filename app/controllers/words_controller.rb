@@ -16,28 +16,10 @@ class WordsController < ApplicationController
     end
   end
 
-  def show_overlap
-    words = Word.select(:word).distinct
-
-    words.each do |word| 
-      unless Word.where(word: word.word).group('meaning').count('id').length == 1
-        @overlap_word_informaitons = Word.where(word: word.word)
-        break
-      end
-    end    
+  def get_word_information
+    word_information = Word.where(word: params[:word])
+    render json: word_information
   end
-
-  def update_overlap
-    word_informations = Word.where(word: params[:word][:word])
-
-    word_informations.each do |word|
-      word.update(word_params)
-    end
-
-    redirect_to overlap_words_path
-  end
-
-
 
   def memorize_all
     vocabulary = Vocabulary.find(params[:vocabulary_id])
@@ -110,14 +92,6 @@ class WordsController < ApplicationController
 
     redirect_to new_word_path(vocabulary_id: vocabulary.id)
   end
-
-  # def create
-  #   vocabulary = Vocabulary.find(params[:word][:vocabulary_id])
-  #   word = vocabulary.words.new(word_params)
-  #   word.remaining_dates = Time.now
-  #   word.save!
-  #   redirect_to new_word_path(vocabulary_id: vocabulary.id)
-  # end
 
   def destroy
     word = Word.find(params[:id])

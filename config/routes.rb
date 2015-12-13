@@ -8,25 +8,11 @@ Rails.application.routes.draw do
     collection do
       put :mutipule_update
       patch :mutipule_update
-    end
-
-    collection do
+      get :get_word_info, to: 'words#get_word_information'
+      get :input_word
       get :memorize
-    end
-    
-    collection do
       get :memorize_all
     end
-
-    collection do
-      get :input_word
-    end
-
-    collection do
-      get :overlap, to: 'words#show_overlap'
-      post :overlap, to: 'words#update_overlap'
-    end
-
   end
 
   get 'auth/:provider/callback', to: 'sessions#create'

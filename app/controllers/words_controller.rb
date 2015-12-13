@@ -18,7 +18,47 @@ class WordsController < ApplicationController
     end
   end
 
-  def get_word_information
+  def get_word_to_other_server(word)
+    require 'net/http'
+    url = 'http://stompesi-word-sentence.herokuapp.com/words/get_word_from_other_information?word=' + word
+    str = URI.escape(url) 
+    uri = URI.parse(str)
+    response = Net::HTTP.get(uri)
+    JSON.parse(response)
+  end
+
+  def set_word_to_other_server(input_word)
+    require 'uri'
+    require 'net/http'
+    require 'net/https'
+
+    uri = URI.parse('http://stompesi-word-sentence.herokuapp.com/words/set_word_to_other_server')
+    https = Net::HTTP.new(uri.host, uri.port)
+    req = Net::HTTP::Post.new(uri.path, initheader = {'Content-Type' =>'application/json'})
+
+    word = {}
+    word[:word] = input_word.word
+    word[:meaning] = input_word.meaning
+    word[:sentence] = input_word.sentence
+    word[:sentence_meaning] = input_word.sentence_meaning
+
+    req.body = {word: word}.to_json
+    res = https.request(req)
+  end
+
+  def set_word_from_other_server
+    word_informations = Word.where(word: params[:word][:word])
+    
+    word_informations.each do |word|
+      word.meaning = params[:word][:meaning]
+      word.sentence = params[:word][:sentence]
+      word.sentence_meaning = params[:word][:sentence_meaning]
+      word.save!
+    end
+    render json: {status: 200}
+  end
+
+  def get_word_from_other_information
     word_information = Word.where(word: params[:word])
     render json: word_information
   end
@@ -53,6 +93,9 @@ class WordsController < ApplicationController
       word.update(word_params)
     end
 
+    update_word = Word.find(params[:id])
+    set_word_to_other_server(update_word)
+
     redirect_to vocabulary_path(vocabulary)
   end
 
@@ -66,42 +109,12 @@ class WordsController < ApplicationController
 
     render json: {success: true}
   end
-
-  def update_overlap
-    word_informations = Word.where(word: params[:word][:word])
-    
-    word_informations.each do |word|
-      word.meaning = params[:word][:meaning]
-      word.sentence = params[:word][:sentence]
-      word.sentence_meaning = params[:word][:sentence_meaning]
-      word.save!
-    end
-
-    if params[:word][:is_outside].nil?
-      word = Word.find_by_word(params[:word][:word])
-      set_stompesi_word(word)
-      redirect_to overlap_words_path
-    else 
-      render json: {status: 200}
-    end
-  end
-
-  def input_word 
-    word = Word.find_by_word(params[:word])
-
-    if word.nil? 
-      render json: {isHaveWord: false}
-    else
-      render json: {isHaveWord: true, meaning: word.meaning}
-    end
-  end
   
   def create
     word = Word.find_by_word(params[:word][:word])
     vocabulary = Vocabulary.find(params[:word][:vocabulary_id])
     unless word.nil? 
       word_informations = Word.where(word: params[:word][:word])
-
       word_informations.each do |word|
         word.update(word_params)
       end
@@ -111,7 +124,25 @@ class WordsController < ApplicationController
     word.remaining_dates = Time.now
     word.save!
 
+    word = Word.find_by_word(params[:word][:word])
+    set_word_to_other_server(word)
+
     redirect_to new_word_path(vocabulary_id: vocabulary.id)
+  end
+
+  def input_word 
+    word = Word.find_by_word(params[:word])
+    if word.nil? 
+      result = get_word_to_other_server(params[:word])
+
+      unless result.length == 0
+        render json: {isHaveWord: true, meaning: result[0]['meaning']}
+      else
+        render json: {isHaveWord: false}
+      end
+    else
+      render json: {isHaveWord: true, meaning: word.meaning}
+    end
   end
 
   def destroy

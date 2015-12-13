@@ -1,5 +1,7 @@
 class WordsController < ApplicationController
   #Word.update_all('remaining_dates = remaining_dates -1')
+  skip_before_filter :verify_authenticity_token
+  
   def self.day
     [0, 1, 2, 4, 8, 16, 32, 64]
   end
@@ -63,6 +65,25 @@ class WordsController < ApplicationController
     end
 
     render json: {success: true}
+  end
+
+  def update_overlap
+    word_informations = Word.where(word: params[:word][:word])
+    
+    word_informations.each do |word|
+      word.meaning = params[:word][:meaning]
+      word.sentence = params[:word][:sentence]
+      word.sentence_meaning = params[:word][:sentence_meaning]
+      word.save!
+    end
+
+    if params[:word][:is_outside].nil?
+      word = Word.find_by_word(params[:word][:word])
+      set_stompesi_word(word)
+      redirect_to overlap_words_path
+    else 
+      render json: {status: 200}
+    end
   end
 
   def input_word 

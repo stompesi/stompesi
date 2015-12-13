@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get :input_word
       get :memorize
       get :memorize_all
+      post :overlap, to: 'words#update_overlap'
     end
   end
 

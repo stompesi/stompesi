@@ -8,25 +8,11 @@ Rails.application.routes.draw do
     collection do
       put :mutipule_update
       patch :mutipule_update
-    end
-
-    collection do
+      post :set_word_to_other_server, to: 'words#set_word_from_other_server'
+      get :input_word
+      get :memorize_all
       get :memorize
     end
-    
-    collection do
-      get :memorize_all
-    end
-
-    collection do
-      get :input_word
-    end
-
-    collection do
-      get :overlap, to: 'words#show_overlap'
-      post :overlap, to: 'words#update_overlap'
-    end
-
   end
 
   get 'auth/:provider/callback', to: 'sessions#create'

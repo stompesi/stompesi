@@ -26,7 +26,7 @@ class WordsController < ApplicationController
         current_word = Word.where(word: word.word)
         unless current_word[0]['meaning'] == result[0]['meaning']
           current_word << result[0]
-          @overlap_word_informaitons = current_word
+          @overlap_word_informaitons = current_word.reverse
           break
         end
       end

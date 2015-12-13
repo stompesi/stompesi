@@ -24,7 +24,7 @@
   <% end %>
 
 
-  <% @overlap_word_informaitons[1..@overlap_word_informaitons.length].each do |word|%>
+  <% @overlap_word_informaitons[1...@overlap_word_informaitons.length].each do |word|%>
     <div>
       <h3 data-word ><%= word['word'] %></h3>
       <span data-meaning >(<%= word['meaning'] %>)</span>

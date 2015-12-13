@@ -36,7 +36,8 @@ class WordsController < ApplicationController
   def get_stompesi_word(word)
     require 'net/http'
     url = 'http://stompesi.herokuapp.com/words/get_word_info?word=' + word.word
-    uri = URI(url)
+    str = URI.escape(url) 
+    uri = URI.parse(str)
     response = Net::HTTP.get(uri)
     JSON.parse(response)
   end

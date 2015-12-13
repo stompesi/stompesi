@@ -19,7 +19,7 @@ class WordsController < ApplicationController
 
   def get_word_to_other_server(word)
     require 'net/http'
-    url = 'http://stompesi.herokuapp.com/words/get_word_info?word=' + word
+    url = 'http://stompesi.herokuapp.com/words/get_word_from_other_information?word=' + word
     str = URI.escape(url) 
     uri = URI.parse(str)
     response = Net::HTTP.get(uri)
@@ -57,6 +57,10 @@ class WordsController < ApplicationController
     render json: {status: 200}
   end
 
+  def get_word_from_other_information
+    word_information = Word.where(word: params[:word])
+    render json: word_information
+  end
 
   def memorize_all
     vocabulary = Vocabulary.find(params[:vocabulary_id])

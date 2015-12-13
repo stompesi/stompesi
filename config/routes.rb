@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     collection do
       put :mutipule_update
       patch :mutipule_update
+      get :get_word_from_other_information, to: 'words#get_word_from_other_information'
       post :set_word_to_other_server, to: 'words#set_word_from_other_server'
       get :input_word
       get :memorize_all

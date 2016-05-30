@@ -7,6 +7,7 @@
 
 
     <h4><%= @vocabulary.name %></h4>
+    <span>단계별 일차 : [0, 1, 2, 4, 8, 16, 32, 64]</span>
   </div>
   <div class="button-group pull-right">
     <%= link_to '+', new_word_path(vocabulary_id: @vocabulary.id), class: 'btn btn-default'%>
@@ -25,6 +26,7 @@
         <th>Sentence</th>
         <th>Sentence - meaning</th>
         <th>State</th>
+        <th>Stage</th>
         <th>설정</th>
       </tr>
     </thead>
@@ -38,6 +40,7 @@
           <td><%= word.sentence %></td>
           <td><%= word.sentence_meaning %></td>
           <td><span class="bullet" style="background-color: <%= word.state %>;"></span></td>
+          <td><%= word.stage %>단계</td>
           <td>
             <%= link_to '', word_path(word, @vocabulary.id), class: 'glyphicon glyphicon-edit
                 '%>

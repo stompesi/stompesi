@@ -196,6 +196,7 @@ word = {
       word.stage.fixed += 1;
       break
     default:
+      word.wordList[word.index].stage += 1;
       break;
     }
     word.wordList[word.index].isPass = true;
@@ -235,9 +236,9 @@ word = {
         word.currentSequence = 0;
         $('#remainning-word-size').text(word.remainningWordSize);
       }
-    }while(wordList[word.index].isPass && word.round != 4);
+    }while(wordList[word.index].isPass && word.remainningWordSize != 0);
 
-    if ($('#question').length != 0 && word.round == 4) {
+    if ($('#question').length != 0 && word.remainningWordSize == 0) {
       $('#question').hide();
       $('#question-size').text(wordList.length);
       $('#stage-up-size').text(word.stage.up);

@@ -259,17 +259,11 @@ word = {
       $('#stage-fixed-size').text(word.stage.fixed);
       $('#stage-down-size').text(word.stage.down);
 
+      var trs = "";
       for(var i = 0 ; i < wordList.length ; i++) {
-        var th = $('<th>');
-        var sequence = $('<td>').text(i + 1);
-        var wordWord = $('<td>').text(wordList[i].word);
-        var status = $('<td>').append($("<span>").addClass("bullet").css("background-color", wordList[i].resultColor));
-
-        th.append(sequence);
-        th.append(wordWord);
-        th.append(status);
-        $("#test-result").append(th);
+        trs += '<tr><td>' + (i + 1) + '</td><td>' + wordList[i].word + '</td><td><span class="bullet" style="background-color: ' + wordList[i].resultColor +';"></span></td></tr>';
       }
+      $("#test-result").html(trs);
 
       $('#result').show();
     } else {

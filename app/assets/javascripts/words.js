@@ -216,6 +216,16 @@ word = {
       word.request();
     });
 
+    $('[data-test-end-btn]').on('click', function() {
+      if(confirm("그만 하시겠습니까?")) {
+        if(word.round >= 4) {
+          word.request();
+        } else {
+          window.history.back();    
+        }
+      }
+    });
+
     $('[data-memorize-end-btn]').on('click', function() {
       window.history.back();
     });
@@ -235,6 +245,7 @@ word = {
         word.index = 0;
         word.currentSequence = 0;
         $('#remainning-word-size').text(word.remainningWordSize);
+        $('#wrod-test-round').text(word.round);
       }
     }while(wordList[word.index].isPass && word.remainningWordSize != 0);
 

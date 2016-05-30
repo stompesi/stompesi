@@ -40,9 +40,11 @@ word = {
     for(var i = 0, wordRowsLength = wordRows.length ; i < wordRowsLength ; i++) {
       $row = wordRows.eq(i);
       this.wordList[i] = {
+        word: $row.children('[data-word]').text(),
         id: $row.data('word-id'),
         stage: $row.data('stage'),
-        isPass: false
+        isPass: false,
+        resultColor: "#E76166"
       };
     }
   },
@@ -189,11 +191,12 @@ word = {
         word.wordList[word.index].stage = 7;
       }
       word.stage.up += 1;
-
+      word.wordList[word.index].resultColor = "#50B551";
       break;
     case 2:
     case 3:
       word.stage.fixed += 1;
+      word.wordList[word.index].resultColor = "#E76600";
       break
     default:
       word.wordList[word.index].stage += 1;
@@ -256,6 +259,18 @@ word = {
       $('#stage-fixed-size').text(word.stage.fixed);
       $('#stage-down-size').text(word.stage.down);
 
+      for(var i = 0 ; i < word.wordList.length ; i++) {
+        var th = $('<th>');
+        var sequence = $('<td>').text(i + 1);
+        var word = $('<td>').text(word.wordList[i].word);
+        var status = $('<td>').append($("<span>").addClass("bullet").css("background-color", word.wordList[i].resultColor));
+
+        th.append(sequence);
+        th.append(word);
+        th.append(status);
+        $("#test-result").append(th);
+      }
+      
       $('#result').show();
     } else {
       $('#answer-controller').show();

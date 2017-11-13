@@ -1,20 +1,17 @@
 class SessionsController < ApplicationController
   def create
-    # auth = request.env["omniauth.auth"]
-    # user = User.find_by_provider_and_uid(auth["provider"], auth["uid"])
+    user = User.find_by_provider_and_uid('facebook', '453125604848286')
 
-    # if user.nil?
-    #   user = User.create_with_omniauth(auth)
-    #   session[:user_id] = user.id
-    #   folders = current_user.folders.new
-    #   folders.name = 'root'
-    #   folders.save!
-    # end
+    if user.nil?
+      user = User.create_with_omniauth(auth)
+      session[:user_id] = user.id
+      folders = current_user.folders.new
+      folders.name = 'root'
+      folders.save!
+    end
 
-    # session[:user_id] = user.id
-
-    session[:user_id] = 1
-
+    session[:user_id] = user.id
+    
     redirect_to folders_url
   end
 

@@ -152,7 +152,10 @@ word = {
       } else if(code == 52) {
         word.playWordPronunciation();
       }
-      
+    });
+
+    $('[data-audio-replay-btn]').on('click', function() {
+      word.playWordPronunciation();
     });
 
   },

@@ -8,14 +8,14 @@
   
   <% @words.each do |word|%>
     <div data-word-row data-word-id="<%= word.id %>" data-stage="<%= word.stage %>" class="row" style="text-align: center; display: none;">
-      <h3 data-word ><%= word.word %></h3>
+      <h3 data-word style="font-size: 1.5em;"><%= word.word %></h3>
       <span data-meaning >(<%= word.meaning %>)</span>
       <span data-sentence ><%= word.sentence %></span>
       <span data-sentence-meaning><%= word.sentence_meaning %></span>
     </div>
   <% end %>  
 
-  <div id="check-controller" class="row" style="text-align: center;">
+  <div id="check-controller" class="row" style="text-align: center; margin-top: 1.5em;">
     <div class="col-md-12">
       <button id="next-btn" class="btn btn-success btn-block">다음</button>
     </div>

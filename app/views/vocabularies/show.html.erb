@@ -1,9 +1,11 @@
 <div class="row vocabulary-header">
   <div class="pull-left">
-    <%= link_to '현재 단어장만 단어 테스트', words_path(vocabulary_id: @vocabulary.id), class: 'btn btn-success' %>
-
+    <input id="test_count" type="number" value="10">
+    <input id="vocabulary_id" type="hidden" value="<%= @vocabulary.id %>">
+    <button id="test_count" class='btn btn-default"></button>
+    <%= link_to '현재 단어장만 단어 테스트', words_path(vocabulary_id: @vocabulary.id), class: 'btn btn-default' %>
     <%= link_to '현재 모든 단어 암기하기', memorize_all_words_path(vocabulary_id: @vocabulary.id), class: 'btn btn-default' %>
-    <%= link_to '현재 모르는 단어만 암기하기', memorize_words_path(vocabulary_id: @vocabulary.id), class: 'btn btn-important' %>
+    <%= link_to '현재 모르는 단어만 암기하기', memorize_words_path(vocabulary_id: @vocabulary.id), class: 'btn btn-default' %>
 
 
     <h4><%= @vocabulary.name %></h4>
@@ -12,6 +14,14 @@
   <div class="button-group pull-right">
     <%= link_to '+', new_word_path(vocabulary_id: @vocabulary.id), class: 'btn btn-default'%>
   </div>
+
+  <sciprt>
+    $('#vocabulary_id').on('click', function() {
+      const count = $('#test_count').val();
+      const vocabularyId = $('#vocabulary_id').val();
+      window.href=`/words?vocabulary_id=${count}&count=${count}`;
+    });
+  </sciprt>
 </div>
 <div class="row">
 </div>
